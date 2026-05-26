@@ -79,6 +79,9 @@ class AuthController extends Controller
      */
     public function getLogout(Request $request)
     {
+        // user Logout 埋点
+        action_log_burial_point('ログアウト');
+
         $this->guard()->logout();
 
         $request->session()->invalidate();
@@ -170,26 +173,40 @@ class AuthController extends Controller
             });
 
             $form->display('username', trans('admin.username'));
-            $form->text('name', trans('admin.name'))->required();
-            $form->image('avatar', trans('admin.avatar'))->autoUpload();
+            $form->text('name', trans('admin.name'))->rules(function ($form) {
+                return 'required|max:30';
+            });
 
-            $form->password('old_password', trans('admin.old_password'));
+            $form->password('old_password', trans('admin.old_password'))->rules(function ($form) {
+                return 'required';
+            });
 
             $form->password('password', trans('admin.password'))
-                ->minLength(5)
-                ->maxLength(20)
                 ->customFormat(function ($v) {
                     if ($v == $this->password) {
                         return;
                     }
 
                     return $v;
+                })
+                ->rules(function ($form) {
+                    return 'required';
                 });
-            $form->password('password_confirmation', trans('admin.password_confirmation'))->same('password');
+            $form->password('password_confirmation', trans('admin.password_confirmation'))->same('password')->rules(function ($form) {
+                return 'required';
+            });
 
             $form->ignore(['password_confirmation', 'old_password']);
 
+            // 参数校验
+            if ($form->password && !preg_match("/^(?=.*[A-Z])(?=.*\d)[A-Z0-9]{8,}+$/u", $form->password)) {
+                $form->responseValidationMessages('password', '大文字・数字組み合わせ8文字以上');
+            }
+
             $form->saving(function (Form $form) {
+                // 临时禁用时间戳
+                $form->model()->timestamps = false;
+
                 if ($form->password && $form->model()->password != $form->password) {
                     $form->password = bcrypt($form->password);
                 }
@@ -239,6 +256,9 @@ class AuthController extends Controller
         $request->session()->regenerate();
 
         $path = $this->getRedirectPath();
+
+        // user Login 埋点
+        action_log_burial_point('ログイン');
 
         return $this->response()
             ->success(trans('admin.login_successful'))

@@ -126,16 +126,22 @@ class Menu
             $path = request()->path();
         }
 
+        if (strpos($path, '_detail')) {
+            $path = substr($path, 0, -7);
+        }
+
+        $queryStringStart = strpos($this->getPath($item['uri']), '?'); // 获取查询字符串的起始位置
+        $pathUrl = ($queryStringStart !== false) ? substr($this->getPath($item['uri']), 0, $queryStringStart) : $this->getPath($item['uri']);
         if (empty($item['children'])) {
             if (empty($item['uri'])) {
                 return false;
             }
 
-            return trim($this->getPath($item['uri']), '/') == $path;
+            return trim($pathUrl, '/') == $path;
         }
 
         foreach ($item['children'] as $v) {
-            if ($path == trim($this->getPath($v['uri']), '/')) {
+            if ($path == trim($pathUrl, '/')) {
                 return true;
             }
             if (! empty($v['children'])) {

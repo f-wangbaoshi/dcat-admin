@@ -13,9 +13,6 @@
     >
         <span class="ie-display">
             {{ $display }}
-            @if(! $display)
-                <i class="feather icon-edit-2"></i>
-            @endif
         </span>
     </a>
 </span>

@@ -64,11 +64,11 @@ class Model
     protected $builder;
 
     /*
-     * 20 items per page as default.
+     * 50 items per page as default.
      *
      * @var int
      */
-    protected $perPage = 20;
+    protected $perPage = 50;
 
     /**
      * @var string

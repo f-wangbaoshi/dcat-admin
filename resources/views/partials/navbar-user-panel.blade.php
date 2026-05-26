@@ -10,11 +10,13 @@
         </span>
     </a>
     <div class="dropdown-menu dropdown-menu-right">
+        @if($user->isShowSetting())
         <a href="{{ admin_url('auth/setting') }}" class="dropdown-item">
             <i class="feather icon-user"></i> {{ trans('admin.setting') }}
         </a>
 
         <div class="dropdown-divider"></div>
+        @endif
 
         <a class="dropdown-item" href="{{ admin_url('auth/logout') }}">
             <i class="feather icon-power"></i> {{ trans('admin.logout') }}

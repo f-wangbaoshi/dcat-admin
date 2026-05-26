@@ -1042,6 +1042,38 @@ class Field implements Renderable
     }
 
     /**
+     * 弹窗 不允许编辑
+     * @return $this
+     */
+    public function DisableInDialog()
+    {
+        if (
+            $this->form instanceof Form
+            && $this->form->inDialog()
+        ) {
+            $this->disable();
+        }
+
+        return $this;
+    }
+
+    /**
+     * 弹窗 只读
+     * @return $this
+     */
+    public function ReadOnlyInDialog()
+    {
+        if (
+            $this->form instanceof Form
+            && $this->form->inDialog()
+        ) {
+            $this->readOnly();
+        }
+
+        return $this;
+    }
+
+    /**
      * @return string|null
      */
     protected function getFormElementId()

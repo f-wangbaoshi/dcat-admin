@@ -7,7 +7,7 @@ use Dcat\Admin\Tree\RowAction;
 
 class QuickEdit extends RowAction
 {
-    protected $dialogFormDimensions = ['700px', '670px'];
+    protected $dialogFormDimensions = ['700px', '370px'];
 
     public function html()
     {
@@ -16,6 +16,7 @@ class QuickEdit extends RowAction
         Form::dialog(trans('admin.edit'))
             ->click('.tree-quick-edit')
             ->success('Dcat.reload()')
+            ->forceRefresh()
             ->dimensions($width, $height);
 
         return <<<HTML

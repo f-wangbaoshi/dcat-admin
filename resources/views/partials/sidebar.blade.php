@@ -25,6 +25,13 @@
 
                     {!! admin_section(Dcat\Admin\Admin::SECTION['LEFT_SIDEBAR_MENU_BOTTOM']) !!}
                 </ul>
+                <p class="clearfix blue-grey lighten-2 mb-0 text-center version-text" style="font-size: 90%;position: absolute;bottom: 10px;left: calc(50% - 73px);">
+                    <span class="text-center d-block d-md-inline-block mt-25">
+                        Neo2 Video
+                        <span>&nbsp;·&nbsp;</span>
+                        v{{env('VERSION')}}
+                    </span>
+                </p>
             </div>
         </aside>
     </div>

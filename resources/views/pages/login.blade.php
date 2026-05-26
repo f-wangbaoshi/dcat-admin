@@ -91,6 +91,7 @@
                     </fieldset>
                     <div class="form-group d-flex justify-content-between align-items-center">
                         <div class="text-left">
+                            <span> {{ trans('admin.login_help') }}</span>
                             @if(config('admin.auth.remember'))
                             <fieldset class="checkbox">
                                 <div class="vs-checkbox-con vs-checkbox-primary">

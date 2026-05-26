@@ -16,14 +16,14 @@ trait HasPaginator
      *
      * @var array
      */
-    protected $perPages = [10, 20, 30, 50, 100, 200];
+    protected $perPages = [50, 100, 200];
 
     /**
      * Default items count per-page.
      *
      * @var int
      */
-    protected $perPage = 20;
+    protected $perPage = 50;
 
     /**
      * Paginate the grid.
@@ -31,7 +31,7 @@ trait HasPaginator
      * @param  int  $perPage
      * @return void
      */
-    public function paginate(int $perPage = 20)
+    public function paginate(int $perPage = 50)
     {
         $this->perPage = $perPage;
 

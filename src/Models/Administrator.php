@@ -11,6 +11,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
+use App\Enums\RoleType;
+use Dcat\Admin\Admin;
+use App\Models\Admin\AdminRoleUser;
 
 /**
  * Class Administrator.
@@ -46,6 +49,25 @@ class Administrator extends Model implements AuthenticatableContract, Authorizab
         $this->setConnection($connection);
 
         $this->setTable(config('admin.database.users_table'));
+    }
+
+
+    /**
+     * 判断是否需要显示setting菜单.
+     *
+     * @return boolean
+     */
+    public function isShowSetting()
+    {
+        // 获取登录用户角色信息
+        $adminId = Admin::user()->id;
+        $adminRoleInfo = AdminRoleUser::where("user_id", $adminId)->first();
+
+        if ($adminRoleInfo && $adminRoleInfo->role_id == RoleType::deploymentUser || $adminRoleInfo->role_id == RoleType::MasterDeploymentUser) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     /**
