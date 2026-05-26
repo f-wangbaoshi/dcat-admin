@@ -1,5 +1,5 @@
 {
-    "name": "f-dcat/laravel-admin",
+    "name": "f-wangbaoshi/dcat-admin",
     "description": "f-dcat admin",
     "type": "library",
     "keywords": ["dcat", "laravel", "admin", "grid", "form", "laravel admin"],
